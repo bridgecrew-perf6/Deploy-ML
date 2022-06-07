@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "C:\\Users\\raiha\\Documents\\Bangkit\\Capstone\\deployModel\\Scripts\\python.exe",
+    "python.linting.pylintPath":"C:\\Users\\raiha\\Documents\\Bangkit\\Capstone\\deployModel\\Scripts\\pylint.exe",
+    "python.linting.enabled": false,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": ["--generate-members=cv2."]
+}
