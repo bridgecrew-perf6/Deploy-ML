@@ -25,10 +25,6 @@ steps:
            '--region', 'asia-southeast2', '--platform', 'managed', 
            '--allow-unauthenticated']
     timeout: 1800s
-<<<<<<< HEAD
-    
-=======
->>>>>>> 6fda1bc98761887c727423bf5bc2f5a252cd3445
 
 # # Save test logs to Google Cloud Storage
 # artifacts:
