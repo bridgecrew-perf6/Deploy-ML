@@ -28,19 +28,19 @@ def coba():
     if request.method == "POST":
 
         #load image dari post request
-        image = request.files.get('file')
-
+        # image = request.files.get('file')
+        data = request.get_json()
         if image is None or image.filename == "":
             return jsonify({"error": "no file/image"})
 
         try:
             # Mulai prediksi gambar dari model
-            img_bytes = image.read()
-            pil_img = Image.open(io.BytesIO(img_bytes))
-            img = transform_img(pil_img)
-            cla = model.predict(img)
-            classes = np.argmax(cla)
-
+            # img_bytes = image.read()
+            # pil_img = Image.open(io.BytesIO(img_bytes))
+            # img = transform_img(pil_img)
+            # cla = model.predict(img)
+            # classes = np.argmax(cla)
+            classes = data['hasil']
             return jsonify({"hasil" :classes})
         except Exception as e:
             return jsonify({"error" : str(e)})
