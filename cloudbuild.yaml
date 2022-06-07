@@ -20,7 +20,7 @@ steps:
 
   # Deploy to Cloud Run
   - name: google/cloud-sdk
-    args: ['gcloud', 'run', 'deploy', 'capstone:${SHORT_SHA}', 
+    args: ['gcloud', 'run', 'deploy', 'capstone', 
            '--image=gcr.io/$PROJECT_ID/capstone:${SHORT_SHA}', 
            '--region', 'asia-southeast2', '--platform', 'managed', 
            '--allow-unauthenticated']
