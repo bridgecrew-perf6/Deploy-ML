@@ -1,25 +1,25 @@
-import io
+# import io
 
 
-from tensorflow import keras
-from PIL import Image
+# from tensorflow import keras
+# from PIL import Image
 
 
-import cv2
-import numpy as np
+# import cv2
+# import numpy as np
 from flask import Flask, request, jsonify
 
 #Load Model
-model = keras.models.load_model("my_model.h5")
-model.compile(loss='categorical_crossentropy',
-              optimizer='adam',
-              metrics=['accuracy'])
+# model = keras.models.load_model("my_model.h5")
+# model.compile(loss='categorical_crossentropy',
+#               optimizer='adam',
+#               metrics=['accuracy'])
 
-def transform_img(x):
-    img = cv2.imread(x)
-    img = cv2.resize(img,(150,150))
-    img = np.reshape(img,[1,150,150,3])
-    return img
+# def transform_img(x):
+#     img = cv2.imread(x)
+#     img = cv2.resize(img,(150,150))
+#     img = np.reshape(img,[1,150,150,3])
+#     return img
 
 app = Flask(__name__)
 
