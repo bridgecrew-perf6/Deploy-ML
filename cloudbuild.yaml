@@ -24,6 +24,7 @@ steps:
            '--image=gcr.io/$PROJECT_ID/capstone:${SHORT_SHA}', 
            '--region', 'asia-southeast2', '--platform', 'managed', 
            '--allow-unauthenticated']
+    timeout: 1800s
 
 # # Save test logs to Google Cloud Storage
 # artifacts:
