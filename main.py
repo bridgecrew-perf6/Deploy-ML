@@ -34,7 +34,7 @@ def coba():
             return jsonify({"error": "no file/image"})
 
         try:
-            # Mulai prediksi
+            # Mulai prediksi gambar dari model
             img_bytes = image.read()
             pil_img = Image.open(io.BytesIO(img_bytes))
             img = transform_img(pil_img)
