@@ -30,8 +30,8 @@ def coba():
         #load image dari post request
         # image = request.files.get('file')
         data = request.get_json()
-        if image is None or image.filename == "":
-            return jsonify({"error": "no file/image"})
+        # if image is None or image.filename == "":
+        #     return jsonify({"error": "no file/image"})
 
         try:
             # Mulai prediksi gambar dari model
