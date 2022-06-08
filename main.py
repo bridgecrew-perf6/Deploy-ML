@@ -40,7 +40,7 @@ def coba():
             # img = transform_img(pil_img)
             # cla = model.predict(img)
             # classes = np.argmax(cla)
-            classes = data['hasil']
+            classes = data["hasil"]
             return jsonify({"hasil" :classes})
         except Exception as e:
             return jsonify({"error" : str(e)})
