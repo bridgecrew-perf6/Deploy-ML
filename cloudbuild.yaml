@@ -1,22 +1,22 @@
 steps:
   # Install dependencies
-  - name: python
-    entrypoint: pip
-    args: ["install", "-r", "requirements.txt", "--user"]
-
-  # # Run unit tests
   # - name: python
-  #   entrypoint: python
-  #   args: ["-m", "pytest", "--junitxml=${SHORT_SHA}_test_log.xml"] 
+  #   entrypoint: pip
+  #   args: ["install", "-r", "requirements.txt", "--user"]
 
-  # Docker Build
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 
-           'gcr.io/$PROJECT_ID/capstone:${SHORT_SHA}', '.']
+  # # # Run unit tests
+  # # - name: python
+  # #   entrypoint: python
+  # #   args: ["-m", "pytest", "--junitxml=${SHORT_SHA}_test_log.xml"] 
 
-  # Docker push to Google Artifact Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'gcr.io/$PROJECT_ID/capstone:${SHORT_SHA}']
+  # # Docker Build
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', '-t', 
+  #          'gcr.io/$PROJECT_ID/capstone:${SHORT_SHA}', '.']
+
+  # # Docker push to Google Artifact Registry
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['push',  'gcr.io/$PROJECT_ID/capstone:${SHORT_SHA}']
 
 
   #Deploy to App Engine
