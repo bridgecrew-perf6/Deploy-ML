@@ -29,4 +29,5 @@ def predict():
     return jsonify({"hasil-prediksi" : int(classes)})
 
 if __name__ == "__main__":
+    PORT = 8080
     app.run(debug=True)
