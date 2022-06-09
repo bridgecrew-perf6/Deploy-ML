@@ -1,51 +1,32 @@
-# import io
+from keras.models import load_model
 
-
-# from tensorflow import keras
-# from PIL import Image
-
-
-# import cv2
-# import numpy as np
 from flask import Flask, request, jsonify
+import numpy as np
+import urllib.request
+import cv2
+# Load Model
+model = load_model("my_model.h5")
 
-#Load Model
-# model = keras.models.load_model("my_model.h5")
-# model.compile(loss='categorical_crossentropy',
-#               optimizer='adam',
-#               metrics=['accuracy'])
-
-# def transform_img(x):
-#     img = cv2.imread(x)
-#     img = cv2.resize(img,(150,150))
-#     img = np.reshape(img,[1,150,150,3])
-#     return img
 
 app = Flask(__name__)
 
-@app.route("/", methods= ['POST'])
-def coba():
-    if request.method == "POST":
+@app.route("/predict", methods= ['POST', 'GET'])
+def predict():
+    #Load url from json
+    getjson = request.get_json()
+    url = getjson['url']
+    #Load the image from url
+    req = urllib.request.urlopen(url)
+    arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+    image = cv2.imdecode(arr, -1) # 'Load it as it is'
+    #Transform the image
+    image = cv2.resize(image,(150,150))
+    image = np.reshape(image,[1,150,150,3])
+    #Start Predict
+    cla = model.predict(image)
+    classes = np.argmax(cla)
 
-        #load image dari post request
-        # image = request.files.get('file')
-        data = request.get_json()
-        # if image is None or image.filename == "":
-        #     return jsonify({"error": "no file/image"})
-
-        try:
-            # Mulai prediksi gambar dari model
-            # img_bytes = image.read()
-            # pil_img = Image.open(io.BytesIO(img_bytes))
-            # img = transform_img(pil_img)
-            # cla = model.predict(img)
-            # classes = np.argmax(cla)
-            classes = data['hasil']
-            return jsonify({"hasil" :classes})
-        except Exception as e:
-            return jsonify({"error" : str(e)})
-
-    return "OK"
+    return jsonify({"hasil-prediksi" : int(classes)})
 
 if __name__ == "__main__":
     app.run(debug=True)
