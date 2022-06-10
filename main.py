@@ -28,6 +28,19 @@ def predict():
 
     return jsonify({"hasil-prediksi" : int(classes)})
 
+@app.route("/", methods= ['POST', 'GET'])
+def coba():
+    if request.method == "POST":
+        getjson = request.get_json()
+        url = getjson['url']
+        if url is None or url == "":
+            return jsonify({"error": "no file"})
+    try:
+ 
+        return jsonify({"hasil-prediksi" : url})
+    except Exception as e:
+        return jsonify({"error" : str(e)})
+
 if __name__ == "__main__":
 
     app.run(debug=True)
