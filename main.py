@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 import numpy as np
 import urllib.request
 import cv2
+import base64
 
 # Load Model
 model = load_model("my_model.h5")
@@ -30,6 +31,28 @@ def predict():
     classes = np.argmax(cla)
 
     return jsonify({"hasil-prediksi" : int(classes)})
+
+@app.route("/predict64", methods= ['POST', 'GET'])
+def predict64():
+
+    #Load url from json
+    getjson = request.get_json()
+    hasil = getjson['base64']
+    #Decode the image from base64
+    img = base64.b64decode(hasil)
+    img = np.asarray(bytearray(img), dtype=np.uint8)
+    image = cv2.imdecode(img, -1)
+    image = cv2.resize(image,(150,150))
+
+    imagetf = cv2.resize(image,(150,150))
+    imagetf = np.reshape(imagetf,[1,150,150,3])
+    #Start Predict
+    cla = model.predict(imagetf)
+    classes = np.argmax(cla)
+
+    return jsonify({"hasil-prediksi" : int(classes)})
+
+
 
 @app.route("/", methods= ['POST', 'GET'])
 def coba():
