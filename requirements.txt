@@ -2,3 +2,5 @@ tensorflow
 gunicorn
 opencv-python
 flask
+h5py
+gcsfs
