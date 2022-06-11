@@ -1,4 +1,4 @@
-from tkinter import Image
+# from tkinter import Image
 from keras.models import load_model
 import io
 from flask import Flask, request, jsonify
