@@ -125,10 +125,10 @@ def predict64():
 
 
     return jsonify({
-    "index-eyebag": int(eb_index),
-    "index-eyelid": int(el_index),
-    "prob-eyebag": eb_prob,
-    "prob-eyelid": el_prob
+    "index_eyebag": int(eb_index),
+    "index_eyelid": int(el_index),
+    "prob_eyebag": eb_prob,
+    "prob_eyelid": el_prob
     })
     # return 'ok'
 
