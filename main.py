@@ -1,6 +1,7 @@
 # from tkinter import Image
 from keras.models import load_model
 import io
+import requests
 from flask import Flask, request, jsonify
 # from keras.preprocessing import
 from PIL import Image
@@ -8,6 +9,8 @@ import numpy as np
 import urllib.request
 import cv2
 import base64
+
+
 
 # Load Model
 eyebagmodel = load_model("eyebag_model_v1.h5")
@@ -23,18 +26,61 @@ def predict():
     #Load url from json
     getjson = request.get_json()
     url = getjson['url']
+    print(url)
     #Load the image from url
+
+    # req = urllib.request.urlopen(url)
     req = urllib.request.urlopen(url)
     arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
-    image = cv2.imdecode(arr, -1) # 'Load it as it is'
-    #Transform the image
-    image = cv2.resize(image,(150,150))
-    image = np.reshape(image,[1,150,150,3])
+    img = cv2.imdecode(arr, -1) # 'Load it as it is'
+    
+    # return 'ok'
+    # response = requests.get(url)
+    # a = urllib.request.urlretrieve(url)
+    # img = Image.open(io.BytesIO(response.content))
+    # a = img
+    # print(type(response))
+    # print((a))
+    # return 'ok'
+    '''EyeBag'''
+    #Convert to array
+    # eb_img = np.asarray(bytearray(req.read()), dtype=np.uint8)
+    
+    # eb_img = cv2.imdecode(eb_img, -1)
+    
+    #Transform
+    eb_img = cv2.resize(img,(224,224))
+    eb_img = np.reshape(eb_img,[1,224,224,3])
     #Start Predict
-    cla = model.predict(image)
-    classes = np.argmax(cla)
+    cla = eyebagmodel.predict(eb_img)
+    eb_index = np.argmax(cla)
+    eb_prob = np.max(cla)
+    eb_prob = np.float64(eb_prob)
 
-    return jsonify({"hasil-prediksi" : int(classes)})
+    '''EyeLid'''
+    req = base64.b64encode(urllib.request.urlopen(url).read())
+    req = base64.b64decode(req)
+    el_img = Image.open(io.BytesIO(req))
+    el_img = el_img.resize((150,150))
+    el_img = np.array(el_img)
+    el_img = np.float64(el_img)
+    el_img /= 255
+    el_img = np.expand_dims(el_img, axis=0)
+    el_img = np.vstack([el_img])
+    classes = eyelidmodel.predict(el_img, batch_size=10)
+    el_prob = np.float64(classes[0][0])
+    if el_prob > 0.5:
+        el_index = 0
+    else:
+        el_index = 1
+
+
+    return jsonify({
+    "index-eyebag": int(eb_index),
+    "index-eyelid": int(el_index),
+    "prob-eyebag": eb_prob,
+    "prob-eyelid": el_prob
+    })
 
 @app.route("/predict64", methods= ['POST', 'GET'])
 def predict64():
@@ -43,10 +89,13 @@ def predict64():
     getjson = request.get_json()
     hasil = getjson['base64']
 
-    '''EyeBag'''
+ 
     #Decode the image from base64
     img = base64.b64decode(hasil)
-    print(type(img))
+    # print(type(img))
+
+
+    '''EyeBag'''
     #Convert to array
     eb_img = np.asarray(bytearray(img), dtype=np.uint8)
     eb_img = cv2.imdecode(eb_img, -1)
