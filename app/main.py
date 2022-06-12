@@ -1,9 +1,9 @@
-# from tkinter import Image
+
 from keras.models import load_model
 import io
 import requests
 from flask import Flask, request, jsonify
-# from keras.preprocessing import
+
 from PIL import Image
 import numpy as np
 import urllib.request
@@ -28,26 +28,13 @@ def predict():
     url = getjson['url']
     print(url)
     #Load the image from url
-
-    # req = urllib.request.urlopen(url)
     req = urllib.request.urlopen(url)
     arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
     img = cv2.imdecode(arr, -1) # 'Load it as it is'
     
-    # return 'ok'
-    # response = requests.get(url)
-    # a = urllib.request.urlretrieve(url)
-    # img = Image.open(io.BytesIO(response.content))
-    # a = img
-    # print(type(response))
-    # print((a))
-    # return 'ok'
+
     '''EyeBag'''
-    #Convert to array
-    # eb_img = np.asarray(bytearray(req.read()), dtype=np.uint8)
-    
-    # eb_img = cv2.imdecode(eb_img, -1)
-    
+
     #Transform
     eb_img = cv2.resize(img,(224,224))
     eb_img = np.reshape(eb_img,[1,224,224,3])
@@ -73,7 +60,13 @@ def predict():
         el_index = 0
     else:
         el_index = 1
-
+        
+    if eb_index == 0:
+        eb_index = 2
+    elif eb_index == 1:
+        eb_index = 0
+    elif eb_index == 2:
+        eb_index = 1
 
     return jsonify({
     "index_eyebag": int(eb_index),
@@ -123,6 +116,12 @@ def predict64():
     else:
         el_index = 1
 
+    if eb_index == 0:
+        eb_index = 2
+    elif eb_index == 1:
+        eb_index = 0
+    elif eb_index == 2:
+        eb_index = 1
 
     return jsonify({
     "index_eyebag": int(eb_index),
