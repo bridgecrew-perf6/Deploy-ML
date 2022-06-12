@@ -103,6 +103,7 @@ def predict64():
 
     '''EyeLid'''
     el_img = Image.open(io.BytesIO(img))
+    #Transform
     el_img = el_img.resize((150,150))
     el_img = np.array(el_img)
     el_img = np.float64(el_img)
