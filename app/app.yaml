@@ -1,6 +1,6 @@
 runtime: custom
 env: flex
-service: sleep_dep_analysis
+service: sleepdepanalysis
 manual_scaling:
   instances: 1
 
