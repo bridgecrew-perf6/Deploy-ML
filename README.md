@@ -32,7 +32,7 @@ Open your GCP Console
 Do this if you want to build a CI/CD pipeline
 1. Fork the repo to your own repository
 2. Go to App Engine dashboard, and clik create. Choose your desired region where your application want to be deployed
-3. Go to Cloud Build, in your left pane, go to settings and enable App Engine
+3. Go to Cloud Build and enable the API, then in your left pane, go to settings and enable App Engine
 4. Still in Cloud Build, in your left pane, go to trigger and create trigger
 5. Set up your desired configuration, you have to connect to your repository. Make sure to choose Cloud Build configuration in Configuration Type. Then create
 7. In the Triggers list, click run on the newly created trigger.
