@@ -1,5 +1,10 @@
 # Deploy Machine Learning Model to Google App Engine
 
+To deploy 2 of our machine learning models, we use Google App Engine because it is easy to deploy and we don't have to manage the compute resources. To make it easier to deploy our models, we make a CI/CD pipeline using Cloud Build with cloubbuild.yaml configuration file. So, when we push our code to Github repo, Cloud Build will automatically build the Docker image and deploy it to App Engine. The App Engine will store the container images to Cloud Storage. App Engine will generate an endpoint that will be used to send the images so the models that had been deployed can analyze it.
+
+![image](https://user-images.githubusercontent.com/99376866/173272024-2e2a5131-a2ec-4541-803e-f51c9062e6b2.png)
+
+We use Python Flask to load the models. Then we create a Dockerfile to containerized our code.
 
 ## Prerequisite:
 * Active GCP account with billing enabled
